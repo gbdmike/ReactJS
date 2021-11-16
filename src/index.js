@@ -1,31 +1,31 @@
-import React from 'react';
+import React from "react";
+import { ThemeProvider, createTheme } from "@mui/material";
 import ReactDOM from 'react-dom'; //ReactDOM берет наше приложение и вставляет его в страницу
-import './index.css';
+import { MessageList, ListChat } from "./components";
+import styles from './index.module.css';
 
 
-//функциональный компонент, содержит логику и возвращает элемент
-const MessageComponent = (props) => {
-  
-  return (
-    <div>
-      <h1>Message Component:</h1>
-      {props.children}
-    </div>
-  ) 
+function Title() {
+  return <p className={styles.title}>My chat app</p>
 }
 
-const App = ({ props }) => {
-  return (
-    //единый react-элемент
-  <div>
-    <h1>App</h1>
-    
-    <MessageComponent>
-      {props}
-    </MessageComponent>
+const light = createTheme({
+  theme: {
+      color: "green"
+  },
+});
+const dark = createTheme({
+  theme: {
+      color: "darkgrey"
+  },
+});
 
+ReactDOM.render(
+<ThemeProvider theme={light}>
+  <Title />
+  <div className={styles.content}>
+    <ListChat />
+    <MessageList />
   </div>
-  );
-};
-
-ReactDOM.render(<App props='Message from props' />, document.getElementById('root'));
+</ThemeProvider>,
+document.getElementById('root'));
