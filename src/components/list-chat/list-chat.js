@@ -1,52 +1,60 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+// import List from "@mui/material/List";
+// import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemText from "@mui/material/ListItemText";
+import { List, ListItemIcon, ListItemText, ListItemButton } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import styles from './list-chat.module.css';
+// import styles from './list-chat.module.css';
 
+// export const ListChat = () => {
+//   const [chats] = useState(["Chat1", "Cha2", "Chat3"]);
+//   const [selectedIndex, setSelectedIndex] = useState(0);
+
+//   return (
+//     <List component="nav">
+//       {chats.map((chat, index) => (
+//       <Chat
+//         key={chat}
+//         title={chat}
+//         selected={selectedIndex === index}
+//         handleListItemClick={() => setSelectedIndex(index)}
+//         />
+//   ))}
+//     </List>
+//   );
+// }
 
 export function ListChat() {
+  const [chats] = useState(["Chat1", "Chat2", "Chat3"]);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const params = useParams();
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
 
+  // <Chat title={chat} selected={params.roomId === chat} />
+
   return (
-    <Box className={styles.box}>
+    
       <List component="nav">
+        {chats.map((event, index) => (
         <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
-          className={styles.listButton}
+        key={event}
+        title={event}
+        selected={params.roomId === event}
+        // selected={selectedIndex === index}
+        onClick={(event) => handleListItemClick(event, index)}
         >
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat1" />
+        <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+        <div>
+          <ListItemText primary={event} />
+        </div>
         </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat2" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-        >
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat3" />
-        </ListItemButton>
-      </List>
-    </Box>
+      ))}
+    </List>
   );
 }
