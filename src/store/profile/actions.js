@@ -1,6 +1,9 @@
-import {ProfileAction} from "./types";
+import { TOGLE_VISIBLE_PROFILE, UPDATE_PROFILE } from "./types";
 
+export const togleVisibleProfile = () => {
+  return { type: TOGLE_VISIBLE_PROFILE };
+};
 
-export const profile = () => {
-    return {type: ProfileAction};
+export const updateProfile = (profile) => {
+  return { type: UPDATE_PROFILE, payload: profile };
 };

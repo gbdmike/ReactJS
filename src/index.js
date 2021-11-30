@@ -1,36 +1,29 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ThemeProvider, createTheme } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ReactDOM from 'react-dom'; //ReactDOM берет наше приложение и вставляет его в страницу
 import { ChatPage, ProfilePage } from "./pages";
-import { Title } from "./components";
+import { Header } from "./components";
+import { CustomThemeProvider } from "./theme-context";
 import { store } from "./store/create-store";
+import "./global.css";
 
+const Root = () => {
+  return (
+    <Provider store={store}>
+      <CustomThemeProvider initialTheme="light">
+        <BrowserRouter>
+          <Header />
 
-const light = createTheme({
-  theme: {
-    color: "green"
-  },
-});
-// const dark = createTheme({
-//   theme: {
-//       color: "darkgrey"
-//   },
-// });
+          <Routes>
+            <Route path="/chat/*" element={<ChatPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            {/* <Route path="/*" element={<h1>404</h1>} /> */}
+          </Routes>
+        </BrowserRouter>
+      </CustomThemeProvider>
+    </Provider>
+  );
+};
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ThemeProvider theme={light}>
-      <BrowserRouter>
-        <Title />
-        <Routes>
-          {/* <Route path="/" element={<HomePage />} /> */}
-          <Route path="/chats/*" element={<ChatPage />} />
-          <Route path="/profile/*" element={<ProfilePage />} />
-          <Route path="/*" element={<h1>404</h1>} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </Provider>,
-  document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById("root"));

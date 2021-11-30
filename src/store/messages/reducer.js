@@ -1,27 +1,42 @@
-import { ADD_MESSAGE } from "./actions";
+import { SEND_MESSAGE, DELETE_MESSAGE } from "./types";
+
 const initialState = {
-    messageList: {},
+  messages: {
+    room1: [
+      { 
+        id: new Date().toISOString(),
+        author: "Bot",
+        message: "Hello from bot to room 1"
+      },
+    ],
+  },
 };
-const chatsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_MESSAGE: {
-            const currentList = state.messageList[action.chatId] || [];
-            return {
-                ...state,
-                messageList: {
-                    ...state.messageList,
-                    [action.chatId]: [
-                        ...currentList,
-                        {
-                            ...action.message,
-                            id: `${action.chatId}${currentList.length}`,
-                        },
-                    ],
-                },
-            };
-        }
-        default:
-            return state;
-    }
+
+export const messagesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SEND_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          [action.payload.roomId]: [
+            ...(state.messages[action.payload.roomId] ?? []),
+            { ...action.payload.message, id: new Date().toISOString() },
+          ],
+        },
+      };
+
+    case DELETE_MESSAGE:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          [action.payload.roomId]: state.messages[action.payload.roomId].filter(
+            (message) => message.id !== action.payload.messageId
+          ),
+        },
+      };
+    default:
+      return state;
+  }
 };
-export default chatsReducer;

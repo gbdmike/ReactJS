@@ -1,29 +1,30 @@
-import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleShowProfile } from "../store/profile/actions";
-
-
-
+import { togleVisibleProfile, profileSelector } from "../store/profile";
+import { ProfileForm } from "../components";
 
 export const ProfilePage = () => {
-    const {showProfile, name} = useSelector((state) => state);
-    const dispatch = useDispatch();
-        
-    const setShowProfile = useCallback(() => {
-        dispatch(ShowProfile);
-    }, [dispatch]);
+  const { isVisibleProfile, firstName, lastName, ...profile } =
+    useSelector(profileSelector);
 
-    return (
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Profile</h1>
+
+      {isVisibleProfile && (
         <div>
-            <p>Profile</p>
-            <input 
-                type="checkbox"
-                checked={showProfile}
-                value={showProfile}
-                onChange={setShowProfile}
-            />
-            <p>Show Profile</p>
-            {showProfile && <div>{name}</div>}
+          <h2>firstName: {firstName}</h2>
+          <h2>lastName: {lastName}</h2>
+          <h2>phone: {profile.phone}</h2>
         </div>
-    )
-}
+      )}
+
+      <button onClick={() => dispatch(togleVisibleProfile())}>
+        togleVisibleProfile
+      </button>
+
+      <ProfileForm firstName={firstName} lastName={lastName} {...profile} />
+    </div>
+  );
+};

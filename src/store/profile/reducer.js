@@ -1,15 +1,26 @@
-import {ProfileAction} from "./types";
+import { TOGLE_VISIBLE_PROFILE, UPDATE_PROFILE } from "./types";
 
 const initialState = {
-    showProfile: false,
-    name: 'Default'
-}
+  firstName: "firstName",
+  lastName: "lastName",
+  isVisibleProfile: true,
+  role: "admin",
+  phone: "89005761123",
+  country: "ru",
+};
 
-export const ProfileReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case ProfileAction:
-            return {...state, showProfile: !state.showProfile}
-        default:
-            return state
-    } 
-}
+export const profileReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TOGLE_VISIBLE_PROFILE: {
+      return { ...state, isVisibleProfile: !state.isVisibleProfile };
+    }
+    case UPDATE_PROFILE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    default:
+      return state;
+  }
+};

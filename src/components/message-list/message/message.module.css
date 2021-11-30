@@ -1,4 +1,4 @@
-.messageUser {
+/* .messageUser {
     padding: 15px;
     background-color: rgb(9, 248, 9);
     border-radius: 20px;
@@ -18,4 +18,33 @@
 
 .message {
     margin-bottom: 15px;
-}
+} */
+
+.message {
+    border-radius: 10px;
+    background-color: rgb(245, 244, 241);
+    /* background-color: #182533; */
+    color: #000;
+    padding: 10px;
+    width: 45%;
+    margin: auto 0 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+  
+  .currentMessage {
+    margin: 0 0 10px auto;
+    background-color: rgb(9, 248, 9);
+    /* background-color: #2b5278; */
+  }
+  
+  .message p:last-child {
+    color: #435564;
+    text-align: right;
+  }
+  
+  .currentMessage p:last-child {
+    color: #45719f;
+    text-align: right;
+  }
